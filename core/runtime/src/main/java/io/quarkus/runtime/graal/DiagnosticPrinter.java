@@ -4,8 +4,8 @@ import java.io.PrintStream;
 import java.time.Instant;
 import java.util.Map;
 
-import org.graalvm.nativeimage.Platform;
 import org.graalvm.nativeimage.Platforms;
+import org.graalvm.nativeimage.impl.InternalPlatform;
 
 import com.oracle.svm.core.annotate.Alias;
 import com.oracle.svm.core.annotate.TargetClass;
@@ -16,7 +16,7 @@ import com.oracle.svm.core.posix.headers.Pthread;
  */
 public final class DiagnosticPrinter {
     @TargetClass(className = "com.oracle.svm.core.posix.thread.PosixJavaThreads")
-    @Platforms({ Platform.LINUX.class, Platform.DARWIN.class })
+    @Platforms({ InternalPlatform.LINUX_AND_JNI.class, InternalPlatform.DARWIN_AND_JNI.class })
     static final class Target_PosixJavaThreads {
         @Alias
         static native Pthread.pthread_t getPthreadIdentifier(Thread thread);
